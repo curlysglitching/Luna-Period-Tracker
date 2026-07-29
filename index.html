@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Luna &mdash; Period Tracker v1.0</title>
+<title>Luna &mdash; Period Tracker v1.1</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -77,10 +77,10 @@
   /* ── STATS BARS ── */
   .stats-bar { background: var(--card); border-bottom: 1px solid var(--border); overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .stats-inner { max-width: 780px; margin: 0 auto; display: -webkit-flex; display: flex; padding: 0 16px; min-width: 320px; }
-  .stat-item { -webkit-flex: 1; flex: 1; padding: 10px 6px; border-right: 1px solid var(--border); text-align: center; min-width: 72px; }
+  .stat-item { -webkit-flex: 1; flex: 1; padding: 10px 4px; border-right: 1px solid var(--border); text-align: center; min-width: 0; overflow: hidden; }
   .stat-item:last-child { border-right: none; }
-  .stat-value { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--accent); white-space: nowrap; }
-  .stat-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-top: 2px; white-space: nowrap; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stat-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .stat-value.headache-color { color: #7c5cbf; }
 
   /* ── LEGEND ── */
@@ -92,9 +92,13 @@
   main { max-width: 780px; margin: 0 auto; padding: 0 16px 80px; }
 
   /* ── MONTH CARD ── */
-  .month-card { background: var(--card); border-radius: 20px; margin-bottom: 24px; box-shadow: var(--shadow); overflow: hidden; min-height: calc(100vh - 200px); display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; }
-  .month-header { padding: 20px 20px 14px; display: -webkit-flex; display: flex; -webkit-align-items: baseline; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--border); }
-  .month-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; }
+  .month-card { background: var(--card); border-radius: 20px; margin: 4px 0 24px; box-shadow: var(--shadow); overflow: hidden; display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; }
+  .month-header { padding: 14px 14px; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: space-between; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--border); }
+  .month-title { display: -webkit-flex; display: flex; -webkit-align-items: baseline; align-items: baseline; gap: 10px; min-width: 0; }
+  .month-nav-btn { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--card); color: var(--muted); cursor: pointer; font-size: 1.3rem; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; -webkit-transition: all 0.15s; transition: all 0.15s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; padding: 0; line-height: 1; -webkit-flex-shrink: 0; flex-shrink: 0; }
+  .month-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .month-nav-btn:active { background: var(--accent-soft); }
+  .month-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; white-space: nowrap; }
   .month-year { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--muted); }
   .cal-wrap { padding: 16px 16px 24px; -webkit-flex: 1; flex: 1; }
   .cal-grid { display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; width: 100%; }
@@ -166,14 +170,13 @@
   .info-icon { font-size: 0.95rem; -webkit-flex-shrink: 0; flex-shrink: 0; margin-top: 1px; }
   .info-close-btn { width: 100%; margin-top: 6px; padding: 11px; border-radius: 12px; border: none; background: var(--accent); color: white; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; -webkit-transition: opacity 0.15s; transition: opacity 0.15s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; -webkit-appearance: none; appearance: none; }
   .info-close-btn:hover,.info-close-btn:active { opacity: 0.85; }
+  .info-backup-actions { display: -webkit-flex; display: flex; gap: 6px; margin-top: 8px; }
 
   /* ── FLOATING BUTTONS ── */
   .fab-group { position: fixed; bottom: 24px; right: 20px; z-index: 300; display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; gap: 10px; -webkit-align-items: flex-end; align-items: flex-end; }
   .fab { border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; -webkit-transition: all 0.2s ease; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; touch-action: manipulation; -webkit-appearance: none; appearance: none; box-shadow: 0 4px 16px rgba(58,42,42,0.18); line-height: 1; }
   .fab-today { background: var(--accent); color: white; font-size: 0.78rem; padding: 10px 16px; border-radius: 24px; letter-spacing: 0.02em; }
   .fab-today:hover,.fab-today:active { opacity: 0.85; -webkit-transform: scale(0.97); transform: scale(0.97); }
-  .fab-top { background: var(--card); color: var(--muted); font-size: 1.2rem; width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--border); display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; padding: 0; }
-  .fab-top:hover,.fab-top:active { border-color: var(--accent); color: var(--accent); }
 
   /* ── CREDIT FOOTER ── */
   .credit-footer { text-align: center; padding: 24px 16px 48px; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; }
@@ -205,7 +208,7 @@
 <div class="splash-overlay" id="splashOverlay">
   <div class="splash-moon">&#9789;</div>
   <div class="splash-title"><span>Luna</span></div>
-  <div class="splash-version">Period &amp; Cycle Tracker &mdash; v1.0</div>
+  <div class="splash-version">Period &amp; Cycle Tracker &mdash; v1.1</div>
   <div class="splash-dots">
     <div class="splash-dot" style="background:#e8547a"></div>
     <div class="splash-dot" style="background:#f97316"></div>
@@ -217,7 +220,7 @@
   </div>
   <div class="splash-tagline">Your personal period tracker &mdash; private, pretty, and always on your device.</div>
   <div class="splash-features">
-    <div class="splash-feature"><span class="splash-feature-icon">&#128197;</span> Full year visual calendar</div>
+    <div class="splash-feature"><span class="splash-feature-icon">&#128197;</span> Clean monthly calendar with arrow navigation</div>
     <div class="splash-feature"><span class="splash-feature-icon">&#128302;</span> Smart cycle predictions</div>
     <div class="splash-feature"><span class="splash-feature-icon">&#127800;</span> Ovulation &amp; fertile window tracking</div>
     <div class="splash-feature"><span class="splash-feature-icon">&#128274;</span> 100% private &mdash; data stays on your device</div>
@@ -228,7 +231,7 @@
 
 <header>
   <div class="header-inner">
-    <div class="logo"><span>Luna</span> &#9789; <span class="version">v1.0</span></div>
+    <div class="logo"><span>Luna</span> &#9789; <span class="version">v1.1</span></div>
     <div class="header-right">
       <div class="year-nav">
         <button class="year-btn" id="prevYear" aria-label="Previous year">&#8249;</button>
@@ -256,16 +259,16 @@
     <div class="stat-item"><div class="stat-value" id="statCycleLen">&#8212;</div><div class="stat-label">Avg Cycle</div></div>
     <div class="stat-item"><div class="stat-value" id="statPeriodLen">&#8212;</div><div class="stat-label">Avg Period</div></div>
     <div class="stat-item"><div class="stat-value" id="statNextPeriod">&#8212;</div><div class="stat-label">Next Period</div></div>
-    <div class="stat-item"><div class="stat-value" id="statNextOvul">&#8212;</div><div class="stat-label">Next Ovulation</div></div>
+    <div class="stat-item"><div class="stat-value" id="statNextOvul">&#8212;</div><div class="stat-label">Ovulation</div></div>
   </div>
 </div>
 
 <!-- Headache Stats -->
 <div class="stats-bar" style="border-top: 1px solid #f0e0d6;">
   <div class="stats-inner">
-    <div class="stat-item"><div class="stat-value headache-color" id="statHeadacheAvg">&#8212;</div><div class="stat-label">Avg Headaches/mo</div></div>
-    <div class="stat-item"><div class="stat-value headache-color" id="statMigraineAvg">&#8212;</div><div class="stat-label">Avg Migraines/mo</div></div>
-    <div class="stat-item"><div class="stat-value headache-color" id="statHeadacheTotal">&#8212;</div><div class="stat-label">Total This Year</div></div>
+    <div class="stat-item"><div class="stat-value headache-color" id="statHeadacheAvg">&#8212;</div><div class="stat-label">Headaches</div></div>
+    <div class="stat-item"><div class="stat-value headache-color" id="statMigraineAvg">&#8212;</div><div class="stat-label">Migraines</div></div>
+    <div class="stat-item"><div class="stat-value headache-color" id="statHeadacheTotal">&#8212;</div><div class="stat-label">This Year</div></div>
     <div class="stat-item"><div class="stat-value headache-color" id="statHeadacheWorst">&#8212;</div><div class="stat-label">Worst Month</div></div>
   </div>
 </div>
@@ -281,7 +284,7 @@
 </div>
 
 <main id="calendarMain"></main>
-<footer class="credit-footer">Luna v1.0 &mdash; Created by <a href="https://github.com/curlysglitchin" target="_blank">CurlysGlitchin</a> &mdash; All rights reserved &copy; 2025</footer>
+<footer class="credit-footer">Luna v1.1 &mdash; Created by <a href="https://github.com/curlysglitchin" target="_blank">CurlysGlitchin</a> &mdash; All rights reserved &copy; 2025</footer>
 
 <!-- Day Menu Overlay -->
 <div class="modal-overlay" id="menuOverlay">
@@ -326,6 +329,7 @@
     <div class="info-modal-sub">Your personal period &amp; cycle tracker &mdash; here&#8217;s how everything works.</div>
     <div class="info-section">
       <div class="info-section-title">&#128197; Logging Your Period</div>
+      <div class="info-row"><span class="info-icon">&#8249;&#8250;</span><span>Use the <strong>arrows beside the month name</strong> to flip between months, and the year arrows at the very top to jump whole years.</span></div>
       <div class="info-row"><span class="info-icon">&#128070;</span><span>Tap any day to open the day menu.</span></div>
       <div class="info-row"><span class="info-icon">&#128167;</span><span>Choose <strong>Light, Medium, or Heavy</strong> flow. The square fills with your chosen color.</span></div>
       <div class="info-row"><span class="info-icon">&#127912;</span><span>Change your <strong>period color</strong> anytime from the swatches at the top.</span></div>
@@ -351,19 +355,27 @@
       <div class="info-section-title">&#128274; Privacy</div>
       <div class="info-row"><span class="info-icon">&#128274;</span><span>Everything saves to <strong>your browser only</strong>. Nothing is sent anywhere &mdash; completely private on your device.</span></div>
     </div>
+    <div class="info-section">
+      <div class="info-section-title">&#128190; Backup &amp; Restore</div>
+      <div class="info-row"><span class="info-icon">&#128229;</span><span>Because your data lives only in this browser, clearing browser data would erase it. <strong>Export</strong> a backup file to keep it safe or move it to another device, then <strong>Import</strong> it there.</span></div>
+      <div class="info-backup-actions">
+        <button class="cm-btn cm-btn-save" id="exportBtn" type="button">Export data</button>
+        <button class="cm-btn cm-btn-clear" id="importBtn" type="button">Import data</button>
+      </div>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+    </div>
     <button class="info-close-btn" id="infoClose">Got it, let&#8217;s go! &#9789;</button>
   </div>
 </div>
 
 <div class="fab-group">
-  <button class="fab fab-top" id="fabTop" title="Back to top">&#8679;</button>
   <button class="fab fab-today" id="fabToday" title="Jump to current month">Today</button>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
 var STORAGE_KEY = 'luna_tracker_v2';
-var state = { year: new Date().getFullYear(), color: '#e8547a', days: {}, _initialLoad: true };
+var state = { year: new Date().getFullYear(), month: new Date().getMonth(), color: '#e8547a', days: {} };
 
 var COLOR_SHADES = {
   '#e8547a': { light: '#f4adc0', medium: '#ee7a97' },
@@ -418,7 +430,7 @@ function updateHeadacheStats() {
   var worstKey=null,worstVal=0;
   for(var ck in combined){if(combined[ck]>worstVal){worstVal=combined[ck];worstKey=ck;}}
   var worstLabel='\u2014';
-  if(worstKey){var wp=worstKey.split('-');worstLabel=MONTHS_SHORT[parseInt(wp[1])]+'('+worstVal+'d)';}
+  if(worstKey){var wp=worstKey.split('-');worstLabel=MONTHS_SHORT[parseInt(wp[1])]+' ('+worstVal+'d)';}
   document.getElementById('statHeadacheAvg').textContent=hAvg==='\u2014'?'\u2014':hAvg+'/mo';
   document.getElementById('statMigraineAvg').textContent=mAvg==='\u2014'?'\u2014':mAvg+'/mo';
   document.getElementById('statHeadacheTotal').textContent=yearTotal>0?yearTotal+' days':'\u2014';
@@ -465,63 +477,66 @@ function render() {
   var main=document.getElementById('calendarMain'); main.innerHTML='';
   document.getElementById('yearLabel').textContent=state.year;
   var today=new Date(),ty=today.getFullYear(),tm=today.getMonth(),td=today.getDate();
-  for(var m=0;m<12;m++){
-    var card=document.createElement('div'); card.className='month-card'; card.id='month-'+m;
-    var mh=document.createElement('div'); mh.className='month-header';
-    var mn=document.createElement('span');mn.className='month-name';mn.textContent=MONTHS[m];
-    var my=document.createElement('span');my.className='month-year';my.textContent=state.year;
-    mh.appendChild(mn);mh.appendChild(my);card.appendChild(mh);
-    var wrap=document.createElement('div');wrap.className='cal-wrap';
-    var grid=document.createElement('div');grid.className='cal-grid';
-    for(var di=0;di<DAYS_SHORT.length;di++){var dh=document.createElement('div');dh.className='day-header';dh.textContent=DAYS_SHORT[di];grid.appendChild(dh);}
-    var firstDay=firstDayOfMonth(state.year,m),numDays=daysInMonth(state.year,m);
-    for(var e=0;e<firstDay;e++){var emp=document.createElement('div');emp.className='day-cell empty';var empIn=document.createElement('div');empIn.className='day-cell-inner';emp.appendChild(empIn);grid.appendChild(emp);}
-    for(var d=1;d<=numDays;d++){
-      (function(day,mo){
-        var k=dateKey(state.year,mo,day),data=state.days[k]||{};
-        var cell=document.createElement('div');cell.className='day-cell';
-        var inner=document.createElement('div');inner.className='day-cell-inner';
-        if(ty===state.year&&tm===mo&&td===day)cell.classList.add('today');
-        if(data.intensity&&data.intensity!=='none'){
-          cell.classList.add('period-'+data.intensity);
-          if(data.intensity==='light'){inner.style.backgroundColor=getLightShade(state.color);inner.style.borderColor=state.color;}
-          else if(data.intensity==='medium'){inner.style.backgroundColor=getMediumShade(state.color);inner.style.borderColor=state.color;}
-          else{inner.style.backgroundColor=state.color;inner.style.borderColor=state.color;}
-        }else if(state._predicted[k]){cell.classList.add('predicted');}
-        var showMarker=false;
-        if(data.ovulation){cell.classList.add('ovulation-day');showMarker=true;}
-        else if(state._ovulDay[k]){cell.classList.add('ovulation-day');showMarker=true;}
-        else if(state._ovulWindow[k]){showMarker=true;}
-        var num=document.createElement('div');num.className='day-num';num.textContent=day;inner.appendChild(num);
-        if(showMarker){var mkr=document.createElement('div');mkr.className='ovul-marker';mkr.textContent='!';inner.appendChild(mkr);}
-        if(data.note||(data.tags&&data.tags.length)){var dot=document.createElement('div');dot.className='note-dot';inner.appendChild(dot);}
-        if(data.tags){
-          var hasMig=data.tags.indexOf('migraine')!==-1;
-          var hasHd=data.tags.indexOf('headache')!==-1;
-          if(hasMig||hasHd){var hIcon=document.createElement('div');hIcon.className='headache-marker';hIcon.textContent=hasMig?'\u26a1':'\uD83E\uDD2F';inner.appendChild(hIcon);}
-        }
-        cell.appendChild(inner);
-        cell.addEventListener('click',function(ev){openMenu(ev,k);});
-        grid.appendChild(cell);
-      })(d,m);
-    }
-    wrap.appendChild(grid);card.appendChild(wrap);main.appendChild(card);
+  var m=state.month;
+  var card=document.createElement('div'); card.className='month-card';
+  var mh=document.createElement('div'); mh.className='month-header';
+  var prevBtn=document.createElement('button');prevBtn.className='month-nav-btn';prevBtn.setAttribute('aria-label','Previous month');prevBtn.innerHTML='&#8249;';
+  prevBtn.addEventListener('click',function(){changeMonth(-1);});
+  var title=document.createElement('div');title.className='month-title';
+  var mn=document.createElement('span');mn.className='month-name';mn.textContent=MONTHS[m];
+  var my=document.createElement('span');my.className='month-year';my.textContent=state.year;
+  title.appendChild(mn);title.appendChild(my);
+  var nextBtn=document.createElement('button');nextBtn.className='month-nav-btn';nextBtn.setAttribute('aria-label','Next month');nextBtn.innerHTML='&#8250;';
+  nextBtn.addEventListener('click',function(){changeMonth(1);});
+  mh.appendChild(prevBtn);mh.appendChild(title);mh.appendChild(nextBtn);card.appendChild(mh);
+  var wrap=document.createElement('div');wrap.className='cal-wrap';
+  var grid=document.createElement('div');grid.className='cal-grid';
+  for(var di=0;di<DAYS_SHORT.length;di++){var dh=document.createElement('div');dh.className='day-header';dh.textContent=DAYS_SHORT[di];grid.appendChild(dh);}
+  var firstDay=firstDayOfMonth(state.year,m),numDays=daysInMonth(state.year,m);
+  for(var e=0;e<firstDay;e++){var emp=document.createElement('div');emp.className='day-cell empty';var empIn=document.createElement('div');empIn.className='day-cell-inner';emp.appendChild(empIn);grid.appendChild(emp);}
+  for(var d=1;d<=numDays;d++){
+    (function(day,mo){
+      var k=dateKey(state.year,mo,day),data=state.days[k]||{};
+      var cell=document.createElement('div');cell.className='day-cell';
+      var inner=document.createElement('div');inner.className='day-cell-inner';
+      if(ty===state.year&&tm===mo&&td===day)cell.classList.add('today');
+      if(data.intensity&&data.intensity!=='none'){
+        cell.classList.add('period-'+data.intensity);
+        if(data.intensity==='light'){inner.style.backgroundColor=getLightShade(state.color);inner.style.borderColor=state.color;}
+        else if(data.intensity==='medium'){inner.style.backgroundColor=getMediumShade(state.color);inner.style.borderColor=state.color;}
+        else{inner.style.backgroundColor=state.color;inner.style.borderColor=state.color;}
+      }else if(state._predicted[k]){cell.classList.add('predicted');}
+      var showMarker=false;
+      if(data.ovulation){cell.classList.add('ovulation-day');showMarker=true;}
+      else if(state._ovulDay[k]){cell.classList.add('ovulation-day');showMarker=true;}
+      else if(state._ovulWindow[k]){showMarker=true;}
+      var num=document.createElement('div');num.className='day-num';num.textContent=day;inner.appendChild(num);
+      if(showMarker){var mkr=document.createElement('div');mkr.className='ovul-marker';mkr.textContent='!';inner.appendChild(mkr);}
+      if(data.note||(data.tags&&data.tags.length)){var dot=document.createElement('div');dot.className='note-dot';inner.appendChild(dot);}
+      if(data.tags){
+        var hasMig=data.tags.indexOf('migraine')!==-1;
+        var hasHd=data.tags.indexOf('headache')!==-1;
+        if(hasMig||hasHd){var hIcon=document.createElement('div');hIcon.className='headache-marker';hIcon.textContent=hasMig?'\u26a1':'\uD83E\uDD2F';inner.appendChild(hIcon);}
+      }
+      cell.appendChild(inner);
+      cell.addEventListener('click',function(ev){openMenu(ev,k);});
+      grid.appendChild(cell);
+    })(d,m);
   }
-  if(state._initialLoad&&state.year===ty){state._initialLoad=false;setTimeout(function(){scrollToMonthEl('month-'+tm);},60);}
+  wrap.appendChild(grid);card.appendChild(wrap);main.appendChild(card);
 }
 
-function scrollToMonthEl(id){
-  var el=document.getElementById(id);if(!el)return;
-  var headerH=document.querySelector('header')?document.querySelector('header').offsetHeight:60;
-  var top=el.getBoundingClientRect().top+window.pageYOffset-headerH-12;
-  try{window.scrollTo({top:top,behavior:'smooth'});}catch(e){window.scrollTo(0,top);}
+function changeMonth(delta){
+  state.month+=delta;
+  if(state.month<0){state.month=11;state.year--;}
+  else if(state.month>11){state.month=0;state.year++;}
+  render();
 }
-function scrollToCurrentMonth(){
+function goToToday(){
   var today=new Date();
-  if(state.year!==today.getFullYear()){state.year=today.getFullYear();render();setTimeout(function(){scrollToMonthEl('month-'+today.getMonth());},120);}
-  else{scrollToMonthEl('month-'+today.getMonth());}
+  state.year=today.getFullYear();state.month=today.getMonth();
+  render();
 }
-function scrollToTop(){try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}}
 
 var activeKey=null;
 function openMenu(ev,key){
@@ -571,9 +586,53 @@ document.getElementById('menuOverlay').addEventListener('click',function(e){if(e
 document.getElementById('infoBtn').addEventListener('click',function(){document.getElementById('infoOverlay').classList.add('visible');});
 document.getElementById('infoClose').addEventListener('click',function(){document.getElementById('infoOverlay').classList.remove('visible');});
 document.getElementById('infoOverlay').addEventListener('click',function(e){if(e.target===this)document.getElementById('infoOverlay').classList.remove('visible');});
-document.getElementById('fabToday').addEventListener('click',scrollToCurrentMonth);
-document.getElementById('fabTop').addEventListener('click',scrollToTop);
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMenu();document.getElementById('infoOverlay').classList.remove('visible');}});
+document.getElementById('fabToday').addEventListener('click',goToToday);
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeMenu();document.getElementById('infoOverlay').classList.remove('visible');return;}
+  var menuOpen=document.getElementById('menuOverlay').classList.contains('visible');
+  var infoOpen=document.getElementById('infoOverlay').classList.contains('visible');
+  if(menuOpen||infoOpen)return;
+  if(e.key==='ArrowLeft')changeMonth(-1);
+  else if(e.key==='ArrowRight')changeMonth(1);
+});
+
+// Backup & Restore
+function exportData(){
+  var payload={app:'luna',exportVersion:1,exportedAt:new Date().toISOString(),color:state.color,days:state.days};
+  var json=JSON.stringify(payload,null,2);
+  var a=document.createElement('a');
+  a.download='luna-backup-'+padDate(new Date())+'.json';
+  try{
+    var blob=new Blob([json],{type:'application/json'});
+    var url=URL.createObjectURL(blob);
+    a.href=url;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url);},1000);
+    showToast('Backup downloaded ✓');
+  }catch(e){showToast('Export failed');}
+}
+function importData(file){
+  var reader=new FileReader();
+  reader.onload=function(){
+    try{
+      var p=JSON.parse(reader.result);
+      if(!p||typeof p.days!=='object'||p.days===null)throw new Error('invalid');
+      var hasData=false; for(var k in state.days){hasData=true;break;}
+      if(hasData&&!confirm('Importing will replace the data currently saved in this browser. Continue?'))return;
+      state.days=p.days;
+      if(p.color&&COLOR_SHADES[p.color])state.color=p.color;
+      saveState();
+      for(var i=0;i<swatches.length;i++)swatches[i].classList[swatches[i].getAttribute('data-color')===state.color?'add':'remove']('active');
+      render();
+      document.getElementById('infoOverlay').classList.remove('visible');
+      showToast('Data restored ✓');
+    }catch(e){showToast('Could not read that backup file');}
+  };
+  reader.readAsText(file);
+}
+document.getElementById('exportBtn').addEventListener('click',exportData);
+document.getElementById('importBtn').addEventListener('click',function(){document.getElementById('importFile').click();});
+document.getElementById('importFile').addEventListener('change',function(){if(this.files&&this.files[0])importData(this.files[0]);this.value='';});
 
 // Splash
 (function(){
