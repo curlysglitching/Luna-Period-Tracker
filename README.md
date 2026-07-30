@@ -8,12 +8,13 @@ Built as a single HTML file, Luna works on any device and can be hosted for free
 
 ## ✨ Features
 
-### 📅 Visual Year Calendar
+### 📅 Monthly Calendar
 
-- Full year displayed January through December, one month per screen
-- Scroll down to move through the year
-- Navigate between years with the arrow buttons at the top
-- Automatically opens to the current month
+- One month shown at a time — no scrolling through the whole year
+- Flip between months with the `‹ ›` arrows beside the month name
+- Jump whole years with the arrow buttons at the top
+- Automatically opens to the current month, and the **Today** button brings you right back
+- Arrow keys (`←` / `→`) also switch months on desktop
 
 ### 🩸 Period Logging
 
@@ -50,6 +51,11 @@ Live stats displayed at the top of the page:
 - Runs 100% in your browser — no login, no account, no internet required after loading
 - All data saved to your browser’s local storage only
 - Nothing is ever sent to any server
+
+### 💾 Backup & Restore
+
+- **Export** your data as a JSON backup file from the ⓘ info menu
+- **Import** a backup to restore your data or move it to another device or browser
 
 -----
 
@@ -93,7 +99,8 @@ Includes `-webkit-` prefixes, flex fallbacks, and no modern-only CSS functions �
 1. **Track symptoms** — tap tags or write a note in the same menu
 1. **Watch predictions appear** — after logging at least one full cycle, Luna calculates your next period, fertile window, and ovulation day automatically
 1. **Change your color** — pick a new period color from the swatches in the top bar anytime
-1. **Browse years** — use the `‹ ›` arrows to view past or future years; your data is saved across all years
+1. **Browse months** — use the `‹ ›` arrows beside the month name to flip months, or the year arrows at the top to jump years; your data is saved across all months and years
+1. **Back up your data** — open the ⓘ menu and use **Export data** / **Import data** to save or restore a backup file
 
 Click the **ⓘ** button in the top right for a full in-app guide.
 
