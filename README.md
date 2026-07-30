@@ -126,6 +126,12 @@ luna-period-tracker/
 
 -----
 
+## 💗 Support the Creator
+
+Luna is free to use. If you'd like to support the creator, donations are welcome via Cash App: [$XCurlyXO](https://cash.app/$XCurlyXO)
+
+-----
+
 ## 🙏 Credits
 
 Designed and built with [Claude](https://claude.ai) by Anthropic.
